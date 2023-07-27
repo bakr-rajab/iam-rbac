@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+// Existing Models
+
+model User {
+  id        Int        @id @default(autoincrement())
+  username  String     @unique
+  password  String
+  isAdmin   Boolean  @default(true)
+  roleId    Int?
+  role      Role?      @relation(fields: [roleId], references: [id])
+}
+
+model Role {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  users        User[]        // One-to-many relationship
+  permissions  Permission[]  // Many-to-many relationship
+  policies     Policy[]      // One-to-many relationship
+}
+
+model Permission {
+  id         Int      @id @default(autoincrement())
+  action     String
+  resource   String
+  roles      Role[]   // Many-to-many relationship
+  policies   Policy[] // One-to-many relationship
+}
+
+model Policy {
+  id            Int        @id @default(autoincrement())
+  effect        String     // 'ALLOW' or 'DENY'
+  action        String
+  resource      String
+  roleId        Int        // Foreign key for Role
+  role          Role       @relation(fields: [roleId], references: [id])
+  permissionId  Int        // Foreign key for Permission
+  permission    Permission @relation(fields: [permissionId], references: [id])
+}
+
+// New Model for Cart
+
+model Cart {
+  id         Int      @id @default(autoincrement())
+  clientId   Int
+  productId  Int
+  quantity   Int
+}
+
+
