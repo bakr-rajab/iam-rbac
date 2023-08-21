@@ -7,8 +7,7 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-// Existing Models
-
+// The User model represents a user in the system. Each user can have a role.
 model User {
   id        Int        @id @default(autoincrement())
   username  String     @unique
@@ -18,6 +17,7 @@ model User {
   role      Role?      @relation(fields: [roleId], references: [id])
 }
 
+// The Role model represents a role in the system. Each role can have multiple users, permissions, and policies.
 model Role {
   id           Int           @id @default(autoincrement())
   name         String        @unique
@@ -26,6 +26,7 @@ model Role {
   policies     Policy[]      // One-to-many relationship
 }
 
+// The Permission model represents a permission in the system. Each permission can be associated with multiple roles and policies.
 model Permission {
   id         Int      @id @default(autoincrement())
   action     String
@@ -34,6 +35,7 @@ model Permission {
   policies   Policy[] // One-to-many relationship
 }
 
+// The Policy model represents a policy in the system. Each policy is associated with a role and a permission.
 model Policy {
   id            Int        @id @default(autoincrement())
   effect        String     // 'ALLOW' or 'DENY'
@@ -45,8 +47,7 @@ model Policy {
   permission    Permission @relation(fields: [permissionId], references: [id])
 }
 
-// New Model for Cart
-
+// The Cart model represents a shopping cart in the system. Each cart is associated with a client and contains multiple products.
 model Cart {
   id         Int      @id @default(autoincrement())
   clientId   Int
