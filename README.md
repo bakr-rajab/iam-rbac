@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project is a role-based access control (RBAC) system built with the [Nest](https://github.com/nestjs/nest) framework and TypeScript. It provides a robust and scalable solution for managing user roles and permissions in a server-side application.
 
 ## Installation
 
@@ -44,6 +44,23 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Setup
+
+To set up and run the project locally, follow these steps:
+
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Run `npm install` to install the project dependencies.
+4. Run `npm run start:dev` to start the development server.
+
+## Architecture
+
+The project follows a modular architecture, with separate modules for users, roles, and permissions. Each module has its own service and controller, and they interact with each other through a central app module.
+
+The user module manages user data and authentication, the role module manages role data and role assignments, and the permission module manages permission data and permission assignments.
+
+The project uses Prisma for database access and Jest for testing.
 
 ## Test
 
